@@ -1,8 +1,12 @@
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
 
-use crate::{collisions::CollisionEvent, player::Player};
+use crate::{
+    collisions::CollisionEvent,
+    config::{WINDOW_HEIGHT, WINDOW_WIDTH},
+    player::Player,
+};
 
-const MAX_SPEED: f32 = 2000.;
+const MAX_SPEED: f32 = 1500.;
 const INITIAL_BALL_VELOCITY: Vec2 = Vec2 { x: 400., y: 0. };
 const INITIAL_BALL_LOCATION: Vec2 = Vec2 { x: 10., y: 0. };
 const BALL_SIZE: f32 = 10.;
@@ -61,6 +65,20 @@ pub fn apply_velocity(mut query: Query<(&mut Transform, &Velocity)>, time: Res<T
     }
 }
 
+pub fn out_of_bounds(
+    query: Query<&Transform, With<Ball>>,
+    spawn_ball_events: EventWriter<RespawnBallEvent>,
+) {
+    let Ok(ball) = query.get_single() else {
+        return;
+    };
+
+    if ball.translation.x.abs() > 5. * WINDOW_WIDTH || ball.translation.y.abs() > 5. * WINDOW_HEIGHT
+    {
+        spawn_ball(spawn_ball_events);
+    }
+}
+
 pub fn speed_up(
     mut ball_query: Query<&mut Velocity, With<Ball>>,
     mut collisions: EventReader<CollisionEvent>,
@@ -72,4 +90,3 @@ pub fn speed_up(
         }
     }
 }
-

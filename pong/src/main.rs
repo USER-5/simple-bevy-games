@@ -1,4 +1,4 @@
-use ball::{apply_velocity, respawn_ball, spawn_ball, speed_up};
+use ball::{apply_velocity, out_of_bounds, respawn_ball, spawn_ball, speed_up};
 use bevy::{
     core_pipeline::clear_color::ClearColorConfig,
     prelude::*,
@@ -79,6 +79,7 @@ fn main() {
                 speed_up,
                 play_wall_collision_sound,
                 update_shader_effect,
+                out_of_bounds
             ),
         )
         .add_systems(FixedUpdate, (check_for_collisions, apply_velocity).chain())
