@@ -5,5 +5,3 @@ build-pages:
 	mv docs/pong_bg2.wasm docs/pong_bg.wasm
 	cp -r pong/assets docs/
 
-clean:
-	rm -rf docs

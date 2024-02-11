@@ -6,7 +6,7 @@ use crate::{
     player::Player,
 };
 
-const MAX_SPEED: f32 = 1500.;
+const MAX_SPEED: f32 = 1200.;
 const INITIAL_BALL_VELOCITY: Vec2 = Vec2 { x: 400., y: 0. };
 const INITIAL_BALL_LOCATION: Vec2 = Vec2 { x: 10., y: 0. };
 const BALL_SIZE: f32 = 10.;

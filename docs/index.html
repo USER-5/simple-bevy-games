@@ -1,16 +1,71 @@
 <!doctype html>
 <html lang="en">
 
-<body style="margin: 0px;">
-  <script type="module">
-    import init from './pong.js'
+<head>
+	<script type="module">
+		import init from "./pong.js";
 
-    init().catch((error) => {
-      if (!error.message.startsWith("Using exceptions for control flow, don't mind me. This isn't actually an error!")) {
-        throw error;
-      }
-    });
-  </script>
+		let hasStarted = false;
+		document.getElementById("pong-canvas").addEventListener("click", () => {
+			if (!hasStarted) {
+				hasStarted = true;
+				init()
+					.then(() => document.getElementById("pong-canvas").focus())
+					.catch((error) => {
+						if (
+							!error.message.startsWith(
+								"Using exceptions for control flow, don't mind me. This isn't actually an error!",
+							)
+						) {
+							throw error;
+						}
+					});
+			}
+		});
+	</script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<style>
+		* {
+			min-width: 0;
+			font-family: Helvetica, Arial, sans-serif;
+			box-sizing: border-box;
+		}
+
+		body {
+			background-color: #111;
+			color: white;
+			width: 100vw;
+		}
+
+		.main-container {
+			background-color: #222;
+			margin: auto;
+			width: 1320px;
+			padding: 20px;
+			box-shadow: 0px 0px 100px #080808;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="main-container">
+		<h1>Simple Bevy Games Showcase</h1>
+		<p>
+			This is literally just here for me to:
+		<ol>
+			<li>Learn</li>
+			<li>Show off</li>
+		</ol>
+		The games may not play well in WASM - but at least they're working? Also
+		don't expect much on mobile.
+		</p>
+		<p>
+			You may need to click on the canvases twice in order to successfully focus them...
+		</p>
+		<h2>Pong</h2>
+		<canvas id="pong-canvas" width="1280" height="720"
+			style="background-color: black; margin: auto; width: 1280px;"></canvas>
+	</div>
 </body>
 
 </html>

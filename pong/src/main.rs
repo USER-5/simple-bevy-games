@@ -45,6 +45,7 @@ fn main() {
                 title: "Bevy Pong".to_string(),
                 resolution: WindowResolution::new(config::WINDOW_WIDTH, config::WINDOW_HEIGHT),
                 resizable: false,
+                canvas: Some("#pong-canvas".into()),
                 ..default()
             }),
             ..default()
@@ -79,7 +80,7 @@ fn main() {
                 speed_up,
                 play_wall_collision_sound,
                 update_shader_effect,
-                out_of_bounds
+                out_of_bounds,
             ),
         )
         .add_systems(FixedUpdate, (check_for_collisions, apply_velocity).chain())
