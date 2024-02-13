@@ -22,6 +22,8 @@ pub mod sounds;
 #[derive(AsBindGroup, Debug, Clone, Asset, TypePath)]
 pub struct CustomMaterial {
     #[uniform(0)]
+    pub scale_factor: Vec4,
+    #[uniform(0)]
     pub window_size: Vec2,
     #[uniform(0)]
     pub ball_location: Vec2,

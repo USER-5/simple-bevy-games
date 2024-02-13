@@ -14,6 +14,7 @@ pub fn spawn_world(
     mut materials: ResMut<Assets<ColorMaterial>>,
     mut our_materials: ResMut<Assets<CustomMaterial>>,
     asset_server: Res<AssetServer>,
+    window: Query<&Window>,
 ) {
     // Top
     commands.spawn((
@@ -68,30 +69,34 @@ pub fn spawn_world(
         Collider::Score(Player::Left),
     ));
 
+    let window = window.get_single().unwrap();
     // Background
     commands.spawn((
         MaterialMesh2dBundle {
-            mesh: meshes
-                .add(
-                    shape::Quad::new(Vec2 {
-                        x: WINDOW_WIDTH,
-                        y: WINDOW_HEIGHT,
-                    })
-                    .into(),
-                )
-                .into(),
+            mesh: meshes.add(shape::Quad::default().into()).into(),
             transform: Transform::from_translation(Vec3 {
                 x: 0.,
                 y: 0.,
                 z: -10.,
+            })
+            .with_scale(Vec3 {
+                x: WINDOW_WIDTH,
+                y: WINDOW_HEIGHT,
+                z: 1.,
             }),
             material: our_materials.add(CustomMaterial {
-                window_size: Vec2 {
-                    x: WINDOW_WIDTH,
-                    y: WINDOW_HEIGHT,
-                },
                 ball_location: Vec2 { x: 0.2, y: 0.5 },
                 colour: asset_server.load("background.png"),
+                window_size: Vec2 {
+                    x: window.physical_width() as f32,
+                    y: window.physical_height() as f32,
+                },
+                scale_factor: Vec4 {
+                    x: window.scale_factor() as f32,
+                    y: 0.,
+                    z: 0.,
+                    w: 0.,
+                },
             }),
             ..default()
         },

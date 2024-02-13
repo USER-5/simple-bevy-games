@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
-	<script type="module">
+	<script <script type="module">
+		// Start loading the WASM so it's a little faster...
+		window.addEventListener("load", () => fetch("pong_bg.wasm", {importance: "low"}));
 		import init from "./pong.js";
 
 		let hasStarted = false;
